@@ -6,7 +6,6 @@ import cn.exrick.xboot.common.vo.PageVo;
 import cn.exrick.xboot.common.vo.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 

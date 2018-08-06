@@ -1,11 +1,9 @@
 package cn.exrick.xboot.service;
 
+import java.util.List;
+
 import cn.exrick.xboot.base.XbootBaseService;
 import cn.exrick.xboot.entity.Permission;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * 权限接口

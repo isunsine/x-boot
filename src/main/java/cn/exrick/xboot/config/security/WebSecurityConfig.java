@@ -1,12 +1,5 @@
 package cn.exrick.xboot.config.security;
 
-import cn.exrick.xboot.config.IgnoredUrlsProperties;
-import cn.exrick.xboot.config.security.jwt.AuthenticationFailHandler;
-import cn.exrick.xboot.config.security.jwt.AuthenticationSuccessHandler;
-import cn.exrick.xboot.config.security.jwt.JWTAuthenticationFilter;
-import cn.exrick.xboot.config.security.jwt.RestAccessDeniedHandler;
-import cn.exrick.xboot.config.security.permission.MyFilterSecurityInterceptor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +10,14 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+
+import cn.exrick.xboot.config.IgnoredUrlsProperties;
+import cn.exrick.xboot.config.security.jwt.AuthenticationFailHandler;
+import cn.exrick.xboot.config.security.jwt.AuthenticationSuccessHandler;
+import cn.exrick.xboot.config.security.jwt.JWTAuthenticationFilter;
+import cn.exrick.xboot.config.security.jwt.RestAccessDeniedHandler;
+import cn.exrick.xboot.config.security.permission.MyFilterSecurityInterceptor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Security 核心配置类
@@ -94,6 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 //添加JWT过滤器 除/login其它请求都需经过此过滤器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .requestCache();
     }
 }

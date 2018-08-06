@@ -1,20 +1,24 @@
 package cn.exrick.xboot.base;
 
-import cn.exrick.xboot.common.constant.CommonConstant;
-import cn.exrick.xboot.common.utils.SnowFlakeUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import cn.exrick.xboot.common.constant.CommonConstant;
+import cn.exrick.xboot.common.utils.SnowFlakeUtil;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @author Exrickx

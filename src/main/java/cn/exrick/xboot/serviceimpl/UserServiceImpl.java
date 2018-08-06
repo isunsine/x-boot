@@ -1,18 +1,15 @@
 package cn.exrick.xboot.serviceimpl;
 
-import cn.exrick.xboot.common.constant.CommonConstant;
-import cn.exrick.xboot.common.vo.SearchVo;
-import cn.exrick.xboot.dao.UserDao;
-import cn.exrick.xboot.dao.UserRoleDao;
-import cn.exrick.xboot.dao.mapper.PermissionMapper;
-import cn.exrick.xboot.dao.mapper.UserRoleMapper;
-import cn.exrick.xboot.entity.Permission;
-import cn.exrick.xboot.entity.Role;
-import cn.exrick.xboot.entity.User;
-import cn.exrick.xboot.service.UserService;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,16 +18,22 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import cn.exrick.xboot.common.constant.CommonConstant;
+import cn.exrick.xboot.common.vo.SearchVo;
+import cn.exrick.xboot.dao.UserDao;
+import cn.exrick.xboot.dao.mapper.PermissionMapper;
+import cn.exrick.xboot.dao.mapper.UserRoleMapper;
+import cn.exrick.xboot.entity.Permission;
+import cn.exrick.xboot.entity.Role;
+import cn.exrick.xboot.entity.User;
+import cn.exrick.xboot.service.UserService;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 用户接口实现
  * @author Exrickx
  */
-@Slf4j
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -74,7 +77,12 @@ public class UserServiceImpl implements UserService {
     public Page<User> findByCondition(User user, SearchVo searchVo, Pageable pageable) {
 
         return userDao.findAll(new Specification<User>() {
-            @Nullable
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Nullable
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 

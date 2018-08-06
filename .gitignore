@@ -5,3 +5,8 @@ target/
 *.iml
 
 *.bak
+/.classpath
+/.factorypath
+/.project
+.settings
+.settings/

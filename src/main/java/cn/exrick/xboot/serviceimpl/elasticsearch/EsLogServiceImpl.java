@@ -1,12 +1,5 @@
 package cn.exrick.xboot.serviceimpl.elasticsearch;
 
-import cn.exrick.xboot.common.vo.SearchVo;
-import cn.exrick.xboot.dao.elasticsearch.EsLogDao;
-import cn.exrick.xboot.entity.elasticsearch.EsLog;
-import cn.exrick.xboot.service.elasticsearch.EsLogService;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +8,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import cn.exrick.xboot.common.vo.SearchVo;
+import cn.exrick.xboot.dao.elasticsearch.EsLogDao;
+import cn.exrick.xboot.entity.elasticsearch.EsLog;
+import cn.exrick.xboot.service.elasticsearch.EsLogService;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Exrickx
  */
 @Service
 @Transactional
-@Slf4j
 public class EsLogServiceImpl implements EsLogService {
 
     @Autowired

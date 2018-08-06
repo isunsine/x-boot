@@ -100,8 +100,6 @@ public class SystemLogAspect {
                     //IP地址
                     esLog.setIpInfo(IpInfoUtil.getIpCity(IpInfoUtil.getIpAddr(request)));
                     //请求开始时间
-                    Date logStartTime = beginTimeThreadLocal.get();
-
                     long beginTime = beginTimeThreadLocal.get().getTime();
                     long endTime = System.currentTimeMillis();
                     //请求耗时
@@ -129,8 +127,6 @@ public class SystemLogAspect {
                     //IP地址
                     log.setIpInfo(IpInfoUtil.getIpCity(IpInfoUtil.getIpAddr(request)));
                     //请求开始时间
-                    Date logStartTime = beginTimeThreadLocal.get();
-
                     long beginTime = beginTimeThreadLocal.get().getTime();
                     long endTime = System.currentTimeMillis();
                     //请求耗时
@@ -201,7 +197,7 @@ public class SystemLogAspect {
         //获取相关参数
         Object[] arguments = joinPoint.getArgs();
         //生成类对象
-        Class targetClass = Class.forName(targetName);
+        Class<?> targetClass = Class.forName(targetName);
         //获取该类中的方法
         Method[] methods = targetClass.getMethods();
 
@@ -211,7 +207,7 @@ public class SystemLogAspect {
             if(!method.getName().equals(methodName)) {
                 continue;
             }
-            Class[] clazzs = method.getParameterTypes();
+            Class<?>[] clazzs = method.getParameterTypes();
             if(clazzs.length != arguments.length) {
                 //比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
                 continue;
