@@ -1,24 +1,21 @@
 package cn.exrick.xboot.config.security;
 
-import cn.exrick.xboot.common.constant.CommonConstant;
-import cn.exrick.xboot.common.utils.JasyptUtil;
-import cn.exrick.xboot.entity.Permission;
-import cn.exrick.xboot.entity.Role;
-import cn.exrick.xboot.entity.User;
-import cn.hutool.core.collection.CollUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import cn.exrick.xboot.common.constant.CommonConstant;
+import cn.exrick.xboot.entity.Permission;
+import cn.exrick.xboot.entity.User;
+import cn.hutool.core.collection.CollUtil;
+
 /**
  * @author Exrickx
  */
-@Slf4j
 public class SecurityUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;

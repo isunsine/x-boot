@@ -1,11 +1,10 @@
 package cn.exrick.xboot.service.elasticsearch;
 
-import cn.exrick.xboot.common.vo.SearchVo;
-import cn.exrick.xboot.entity.elasticsearch.EsLog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import cn.exrick.xboot.common.vo.SearchVo;
+import cn.exrick.xboot.entity.elasticsearch.EsLog;
 
 /**
  * @author Exrickx

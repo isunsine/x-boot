@@ -1,9 +1,12 @@
 package cn.exrick.xboot.config.security.permission;
 
-import cn.exrick.xboot.entity.Permission;
-import cn.exrick.xboot.service.PermissionService;
-import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -13,14 +16,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import java.util.*;
+import cn.exrick.xboot.entity.Permission;
+import cn.exrick.xboot.service.PermissionService;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 权限资源管理器
  * 为权限决断器提供支持
  * @author Exrickx
  */
-@Slf4j
 @Component
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 

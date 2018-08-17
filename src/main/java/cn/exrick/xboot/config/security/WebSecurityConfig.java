@@ -17,14 +17,12 @@ import cn.exrick.xboot.config.security.jwt.AuthenticationSuccessHandler;
 import cn.exrick.xboot.config.security.jwt.JWTAuthenticationFilter;
 import cn.exrick.xboot.config.security.jwt.RestAccessDeniedHandler;
 import cn.exrick.xboot.config.security.permission.MyFilterSecurityInterceptor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Security 核心配置类
  * 开启控制权限至Controller
  * @author Exrickx
  */
-@Slf4j
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

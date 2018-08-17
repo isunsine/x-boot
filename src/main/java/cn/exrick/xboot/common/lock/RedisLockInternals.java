@@ -1,20 +1,18 @@
 package cn.exrick.xboot.common.lock;
 
-import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 /**
  * https://github.com/yujiasun/Distributed-Kit
  * Created by sunyujia@aliyun.com on 2016/2/26.
  */
-@Slf4j
 class RedisLockInternals {
 
     private JedisPool jedisPool;
@@ -51,7 +49,6 @@ class RedisLockInternals {
     private String createRedisKey(String lockId) {
 
         Jedis jedis = null;
-        boolean broken = false;
         try {
             String value=lockId+randomId(1);
             jedis = jedisPool.getResource();
@@ -79,7 +76,6 @@ class RedisLockInternals {
     void unlockRedisLock(String key,String value) {
 
         Jedis jedis = null;
-        boolean broken = false;
         try {
             jedis = jedisPool.getResource();
             String luaScript=""
@@ -93,7 +89,7 @@ class RedisLockInternals {
             keys.add(key);
             List<String> args = new ArrayList<String>();
             args.add(value);
-            Object r=jedis.eval(luaScript, keys, args);
+            jedis.eval(luaScript, keys, args);
         } finally {
             if(jedis!=null){
                 jedis.close();

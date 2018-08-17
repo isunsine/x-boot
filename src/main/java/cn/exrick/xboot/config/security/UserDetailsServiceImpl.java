@@ -1,13 +1,5 @@
 package cn.exrick.xboot.config.security;
 
-import cn.exrick.xboot.common.annotation.SystemLog;
-import cn.exrick.xboot.common.utils.ResponseUtil;
-import cn.exrick.xboot.entity.User;
-import cn.exrick.xboot.exception.LoginFailLimitException;
-import cn.exrick.xboot.service.UserService;
-import cn.exrick.xboot.service.mybatis.IPermissionService;
-import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,10 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import cn.exrick.xboot.entity.User;
+import cn.exrick.xboot.exception.LoginFailLimitException;
+import cn.exrick.xboot.service.UserService;
+import cn.hutool.core.util.StrUtil;
+
 /**
  * @author Exrickx
  */
-@Slf4j
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService{
 

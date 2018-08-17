@@ -48,7 +48,6 @@ public interface XbootBaseService<E, ID extends Serializable> {
      * @return
      */
     public default E save(E entity) {
-
         return getRepository().save(entity);
     }
 

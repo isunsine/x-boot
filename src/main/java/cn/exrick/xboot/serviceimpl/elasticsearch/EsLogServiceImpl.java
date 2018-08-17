@@ -22,63 +22,66 @@ import cn.hutool.core.util.StrUtil;
 @Transactional
 public class EsLogServiceImpl implements EsLogService {
 
-    @Autowired
-    private EsLogDao logDao;
+	@Autowired
+	private EsLogDao logDao;
 
-    @Override
-    public EsLog saveLog(EsLog esLog) {
+//	@Async("asyncPoolTaskExecutor")
+	@Override
+	public EsLog saveLog(EsLog esLog) {
 
-        return logDao.save(esLog);
-    }
+		return logDao.save(esLog);
+	}
 
-    @Override
-    public void deleteLog(String id) {
+	@Override
+	public void deleteLog(String id) {
 
-        logDao.deleteById(id);
-    }
+		logDao.deleteById(id);
+	}
 
-    @Override
-    public void deleteAll() {
+	@Override
+	public void deleteAll() {
 
-        logDao.deleteAll();
-    }
+		logDao.deleteAll();
+	}
 
-    @Override
-    public Page<EsLog> getLogList(Pageable pageable) {
+	@Override
+	public Page<EsLog> getLogList(Pageable pageable) {
 
-        return logDao.findAll(pageable);
-    }
+		return logDao.findAll(pageable);
+	}
 
-    @Override
-    public Page<EsLog> searchLog(String key, SearchVo searchVo, Pageable pageable) {
+	@Override
+	public Page<EsLog> searchLog(String key, SearchVo searchVo, Pageable pageable) {
 
-        if(StrUtil.isBlank(key)&&StrUtil.isBlank(searchVo.getStartDate())){
-            return null;
-        }
+		if (StrUtil.isBlank(key) && StrUtil.isBlank(searchVo.getStartDate())) {
+			return null;
+		}
 
-        QueryBuilder qb;
+		QueryBuilder qb;
 
+		QueryBuilder qb1 = QueryBuilders.multiMatchQuery(key, "requestUrl", "requestType", "requestParam", "username",
+				"ip", "ipInfo");
 
-        QueryBuilder qb1 = QueryBuilders.multiMatchQuery(key, "requestUrl", "requestType","requestParam","username","ip","ipInfo");
+		// 仅有key
+		if (StrUtil.isNotBlank(key) && StrUtil.isBlank(searchVo.getStartDate())
+				&& StrUtil.isBlank(searchVo.getEndDate())) {
+			qb = qb1;
+		} else if (StrUtil.isBlank(key) && StrUtil.isNotBlank(searchVo.getStartDate())
+				&& StrUtil.isNotBlank(searchVo.getEndDate())) {
+			// 仅有时间范围
+			Long start = DateUtil.parse(searchVo.getStartDate()).getTime();
+			Long end = DateUtil.endOfDay(DateUtil.parse(searchVo.getEndDate())).getTime();
+			QueryBuilder qb2 = QueryBuilders.rangeQuery("timeMillis").gte(start).lte(end);
+			qb = qb2;
+		} else {
+			// 两者都有
+			Long start = DateUtil.parse(searchVo.getStartDate()).getTime();
+			Long end = DateUtil.endOfDay(DateUtil.parse(searchVo.getEndDate())).getTime();
+			QueryBuilder qb2 = QueryBuilders.rangeQuery("timeMillis").gte(start).lte(end);
+			qb = QueryBuilders.boolQuery().must(qb1).must(qb2);
+		}
 
-        //仅有key
-        if(StrUtil.isNotBlank(key)&&StrUtil.isBlank(searchVo.getStartDate())&&StrUtil.isBlank(searchVo.getEndDate())){
-            qb = qb1;
-        }else if(StrUtil.isBlank(key)&&StrUtil.isNotBlank(searchVo.getStartDate())&&StrUtil.isNotBlank(searchVo.getEndDate())){
-            //仅有时间范围
-            Long start = DateUtil.parse(searchVo.getStartDate()).getTime();
-            Long end = DateUtil.endOfDay(DateUtil.parse(searchVo.getEndDate())).getTime();
-            QueryBuilder qb2 = QueryBuilders.rangeQuery("timeMillis").gte(start).lte(end);
-            qb = qb2;
-        }else{
-            //两者都有
-            Long start = DateUtil.parse(searchVo.getStartDate()).getTime();
-            Long end = DateUtil.endOfDay(DateUtil.parse(searchVo.getEndDate())).getTime();
-            QueryBuilder qb2 = QueryBuilders.rangeQuery("timeMillis").gte(start).lte(end);
-            qb = QueryBuilders.boolQuery().must(qb1).must(qb2);
-        }
-
-        //多字段搜索
-        return logDao.search(qb, pageable);
-    }
+		// 多字段搜索
+		return logDao.search(qb, pageable);
+	}
 }
