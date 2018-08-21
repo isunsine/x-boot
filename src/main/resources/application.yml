@@ -14,7 +14,7 @@ spring:
     # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果)
     password: ENC(e8eb9vbnBiPRjrRjoI9RL7gW6D3Y8SFT)
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     logSlowSql: true
   jpa:
     show-sql: true

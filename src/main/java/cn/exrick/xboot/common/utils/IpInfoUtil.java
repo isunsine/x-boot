@@ -16,12 +16,12 @@ import java.net.UnknownHostException;
  * @author Exrickx
  */
 @Slf4j
-public class IpInfoUtil {
+public final class IpInfoUtil {
 
     /**
      * 你的APPKEY mob官网注册申请即可
      */
-    private final static String APPKEY = "你的APPKEY";
+    private final static String APPKEY = "273c642731397";
 
     /**
      * Mob IP查询接口
@@ -69,6 +69,7 @@ public class IpInfoUtil {
         if("0:0:0:0:0:0:0:1".equals(ip)){
             ip="127.0.0.1";
         }
+        log.info("当前IP：[{}]", ip);
         return ip;
     }
 

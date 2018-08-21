@@ -1,5 +1,16 @@
 package cn.exrick.xboot.controller.common;
 
+import java.io.FileInputStream;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import cn.exrick.xboot.common.limit.RedisRaterLimiter;
 import cn.exrick.xboot.common.utils.IpInfoUtil;
 import cn.exrick.xboot.common.utils.QiniuUtil;
@@ -10,14 +21,6 @@ import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.FileInputStream;
 
 /**
  * @author Exrickx

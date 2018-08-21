@@ -1,32 +1,34 @@
 package cn.exrick.xboot.config.security.jwt;
 
-import cn.exrick.xboot.common.constant.SecurityConstant;
-import cn.exrick.xboot.common.utils.ResponseUtil;
-import cn.exrick.xboot.common.vo.Authority;
-import cn.exrick.xboot.entity.Role;
-import cn.exrick.xboot.exception.XbootException;
-import cn.hutool.core.util.StrUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import cn.exrick.xboot.common.constant.SecurityConstant;
+import cn.exrick.xboot.common.utils.ResponseUtil;
+import cn.exrick.xboot.exception.XbootException;
+import cn.hutool.core.util.StrUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Exrickx

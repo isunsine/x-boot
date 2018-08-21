@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
 import cn.exrick.xboot.common.annotation.SystemLog;
@@ -51,7 +52,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 		}
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 		List<GrantedAuthority> list = (List<GrantedAuthority>) ((UserDetails) authentication.getPrincipal()).getAuthorities();
-		List<String> authorities = new ArrayList<>();
+		List<String> authorities = Lists.newArrayList();
 		for (GrantedAuthority g : list) {
 			authorities.add(g.getAuthority());
 		}

@@ -119,10 +119,9 @@ public class QiniuUtil {
                 addHeader("Content-Type", "application/octet-stream")
                 .addHeader("Authorization", "UpToken " + getUpToken())
                 .post(rb).build();
-        OkHttpClient client = new OkHttpClient();
-        okhttp3.Response response = null;
+//        okhttp3.Response response = null;
         try {
-            response = client.newCall(request).execute();
+        	new OkHttpClient().newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

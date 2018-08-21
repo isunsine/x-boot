@@ -2,6 +2,7 @@ package cn.exrick.xboot.config.security.jwt;
 
 import cn.exrick.xboot.common.utils.ResponseUtil;
 import cn.exrick.xboot.exception.LoginFailLimitException;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
                 value = "0";
             }
             //获取已登录错误次数
-            int loginFailTime = Integer.parseInt(value);
+            int loginFailTime = Convert.toInt(value);
             int restLoginTime = loginTimeLimit - loginFailTime;
             log.info("用户"+username+"登录失败，还有"+restLoginTime+"次机会");
             ResponseUtil.out(response, ResponseUtil.resultMap(false,500,"用户名或密码错误"));

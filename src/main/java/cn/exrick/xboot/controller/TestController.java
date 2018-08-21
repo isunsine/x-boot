@@ -1,5 +1,10 @@
 package cn.exrick.xboot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import cn.exrick.xboot.common.annotation.RateLimiter;
 import cn.exrick.xboot.common.lock.Callback;
 import cn.exrick.xboot.common.lock.RedisDistributedLockTemplate;
@@ -8,10 +13,6 @@ import cn.exrick.xboot.common.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author Exrickx
