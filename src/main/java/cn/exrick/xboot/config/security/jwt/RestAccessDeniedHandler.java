@@ -22,7 +22,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
-
+    	log.info("您没有权限");
         ResponseUtil.out(response,ResponseUtil.resultMap(false,403,"您没有权限"));
     }
 

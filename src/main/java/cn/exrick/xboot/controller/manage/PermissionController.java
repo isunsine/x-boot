@@ -1,9 +1,25 @@
 package cn.exrick.xboot.controller.manage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import cn.exrick.xboot.common.constant.CommonConstant;
-import cn.exrick.xboot.common.utils.PageUtil;
+import cn.exrick.xboot.common.constant.RedisKeyConstant;
+import cn.exrick.xboot.common.utils.RedisUtils;
 import cn.exrick.xboot.common.utils.ResultUtil;
-import cn.exrick.xboot.common.vo.PageVo;
 import cn.exrick.xboot.common.vo.Result;
 import cn.exrick.xboot.config.security.permission.MySecurityMetadataSource;
 import cn.exrick.xboot.entity.Permission;
@@ -11,28 +27,13 @@ import cn.exrick.xboot.entity.RolePermission;
 import cn.exrick.xboot.service.PermissionService;
 import cn.exrick.xboot.service.RolePermissionService;
 import cn.exrick.xboot.service.mybatis.IPermissionService;
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 
 /**
  * @author Exrick
  */
-@Slf4j
 @RestController
 @Api(description = "菜单/权限管理接口")
 @RequestMapping("/xboot/permission")
@@ -50,6 +51,9 @@ public class PermissionController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+    
+    @Autowired
+	private RedisUtils redisUtils;
 
     @Autowired
     private MySecurityMetadataSource mySecurityMetadataSource;
@@ -134,6 +138,7 @@ public class PermissionController {
     public Result<Permission> add(@ModelAttribute Permission permission){
 
         Permission u = permissionService.save(permission);
+        redisUtils.delete(RedisKeyConstant.CACHE_KEY);
         //重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
         //手动删除缓存
@@ -146,6 +151,7 @@ public class PermissionController {
     public Result<Permission> edit(@ModelAttribute Permission permission){
 
         Permission u = permissionService.update(permission);
+        redisUtils.delete(RedisKeyConstant.CACHE_KEY);
         //重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
         //手动批量删除缓存
@@ -173,6 +179,7 @@ public class PermissionController {
         for(String id:ids){
             permissionService.delete(id);
         }
+        redisUtils.delete(RedisKeyConstant.CACHE_KEY);
         //重新加载权限
         mySecurityMetadataSource.loadResourceDefine();
         //手动删除缓存

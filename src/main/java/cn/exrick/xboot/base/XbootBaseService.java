@@ -1,11 +1,11 @@
 package cn.exrick.xboot.base;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.io.Serializable;
-import java.util.List;
 
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
 //JDK8函数式接口注解 仅能包含一个抽象方法
 @FunctionalInterface
 public interface XbootBaseService<E, ID extends Serializable> {
-
+	
     public XbootBaseDao<E, ID> getRepository();
     
     /**

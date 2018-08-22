@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -81,7 +82,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
                 String username = claims.getSubject();
 
                 //获取权限
-                List<GrantedAuthority> authorities = new ArrayList<>();
+                List<GrantedAuthority> authorities = Lists.newArrayList();
                 String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
 
                 if(StrUtil.isNotBlank(authority)){

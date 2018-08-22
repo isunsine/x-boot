@@ -1,7 +1,6 @@
 package cn.exrick.xboot.config.security.jwt;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

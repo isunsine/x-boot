@@ -5,7 +5,6 @@ jasypt:
 
 server:
   port: 8888
-
 spring:
   # 数据源
   datasource:
@@ -15,7 +14,6 @@ spring:
     password: ENC(e8eb9vbnBiPRjrRjoI9RL7gW6D3Y8SFT)
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    logSlowSql: true
   jpa:
     show-sql: true
     # 自动生成表结构
@@ -115,3 +113,4 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
