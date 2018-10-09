@@ -25,7 +25,7 @@ public class User extends XbootBaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户名")
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @ApiModelProperty(value = "密码")
@@ -40,16 +40,18 @@ public class User extends XbootBaseEntity {
     @ApiModelProperty(value = "邮件")
     private String email;
 
-    @ApiModelProperty(value = "地址")
+    @ApiModelProperty(value = "省市县地址")
     private String address;
 
+    @ApiModelProperty(value = "街道地址")
+    private String street;
+
     @ApiModelProperty(value = "0女 1男 2保密")
-    @Column(length=1)
     private Integer sex;
 
     @ApiModelProperty(value = "用户头像")
     @Column(length=1000)
-    private String avatar = "https://s1.ax1x.com/2018/05/19/CcdVQP.png";
+    private String avatar = CommonConstant.USER_DEFAULT_AVATAR;
 
     @ApiModelProperty(value = "用户类型 0普通用户 1管理员")
     private Integer type = CommonConstant.USER_TYPE_NORMAL;
@@ -59,6 +61,14 @@ public class User extends XbootBaseEntity {
 
     @ApiModelProperty(value = "描述/详情/备注")
     private String description;
+
+    @ApiModelProperty(value = "所属部门id")
+    private String departmentId;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "所属部门名称")
+    private String departmentTitle;
 
     @Transient
     @TableField(exist=false)
