@@ -231,10 +231,10 @@ import cn.exrick.xboot.common.annotation.SystemLog;
 import cn.exrick.xboot.common.utils.IpInfoUtil;
 import cn.exrick.xboot.common.utils.ObjectUtil;
 import cn.exrick.xboot.common.utils.ThreadPoolUtil;
-import cn.exrick.xboot.entity.Log;
-import cn.exrick.xboot.entity.elasticsearch.EsLog;
-import cn.exrick.xboot.service.LogService;
-import cn.exrick.xboot.service.elasticsearch.EsLogService;
+import cn.exrick.xboot.modules.base.entity.Log;
+import cn.exrick.xboot.modules.base.entity.elasticsearch.EsLog;
+import cn.exrick.xboot.modules.base.service.LogService;
+import cn.exrick.xboot.modules.base.service.elasticsearch.EsLogService;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -249,6 +249,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -316,7 +317,9 @@ public class SystemLogAspect {
                     EsLog esLog = new EsLog();
 
                     //日志标题
-                    esLog.setName(getControllerMethodDescription(joinPoint));
+                    esLog.setName(getControllerMethodInfo(joinPoint).get("description").toString());
+                    //日志类型
+                    esLog.setLogType((int)getControllerMethodInfo(joinPoint).get("type"));
                     //日志请求url
                     esLog.setRequestUrl(request.getRequestURI());
                     //请求方式
@@ -346,7 +349,9 @@ public class SystemLogAspect {
                     Log log = new Log();
 
                     //日志标题
-                    log.setName(getControllerMethodDescription(joinPoint));
+                    log.setName(getControllerMethodInfo(joinPoint).get("description").toString());
+                    //日志类型
+                    log.setLogType((int)getControllerMethodInfo(joinPoint).get("type"));
                     //日志请求url
                     log.setRequestUrl(request.getRequestURI());
                     //请求方式
@@ -425,8 +430,9 @@ public class SystemLogAspect {
      * @return 方法描述
      * @throws Exception
      */
-    public static String getControllerMethodDescription(JoinPoint joinPoint) throws Exception{
+    public static Map<String, Object> getControllerMethodInfo(JoinPoint joinPoint) throws Exception{
 
+        Map<String, Object> map = new HashMap<String, Object>(16);
         //获取目标类名
         String targetName = joinPoint.getTarget().getClass().getName();
         //获取方法名
@@ -439,6 +445,7 @@ public class SystemLogAspect {
         Method[] methods = targetClass.getMethods();
 
         String description = "";
+        Integer type = null;
 
         for(Method method : methods) {
             if(!method.getName().equals(methodName)) {
@@ -450,8 +457,11 @@ public class SystemLogAspect {
                 continue;
             }
             description = method.getAnnotation(SystemLog.class).description();
+            type = method.getAnnotation(SystemLog.class).type().ordinal();
+            map.put("description", description);
+            map.put("type", type);
         }
-        return description;
+        return map;
     }
 
 }

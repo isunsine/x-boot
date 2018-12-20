@@ -89,7 +89,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 package cn.exrick.xboot.config.security.jwt;
 
 import cn.exrick.xboot.common.utils.ResponseUtil;
-import cn.exrick.xboot.exception.LoginFailLimitException;
+import cn.exrick.xboot.config.exception.LoginFailLimitException;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

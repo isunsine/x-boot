@@ -139,7 +139,6 @@ spring:
     password: ENC(F4B0s6u9xcDw3V+P0qC4CA==)
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    logSlowSql: true
     # Druid StatViewServlet配置
     druid:
       stat-view-servlet:
@@ -190,6 +189,10 @@ xboot:
     timeout: 1000
     # 总限制100个请求
     limit: 100
+  # token交互方式
+  token:
+    # 默认JWT 启用Redis后设置为true后，token将存入redis，并具有单点登录功能
+    redis: true
   # token过期时间（分钟）
   tokenExpireTime: 60
   # 用户选择保存登录状态对应token过期时间（天）
@@ -247,21 +250,21 @@ swagger:
 mybatis-plus:
   # 放在resource目录 classpath:/mapper/*Mapper.xml
   mapper-locations: classpath:/mapper/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: cn.exrick.xboot.entity
-  typeEnumsPackage: cn.exrick.xboot.entity
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: cn.exrick.xboot.*.*.entity
+  typeEnumsPackage: cn.exrick.xboot.*.*.entity
   global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
     id-type: 2
-    #字段策略 0:"忽略判断",1:"非 NULL 判断",2:"非空判断"
+    # 字段策略 0:"忽略判断",1:"非 NULL 判断",2:"非空判断"
     field-strategy: 2
-    #驼峰下划线转换
+    # 驼峰下划线转换
     db-column-underline: true
-    #刷新mapper 调试神器
+    # 刷新mapper 调试神器
     refresh-mapper: true
-    #数据库大写下划线转换
+    # 数据库大写下划线转换
     #capital-mode: true
-    #逻辑删除配置（下面3个配置）
+    # 逻辑删除配置（下面3个配置）
     logic-delete-value: 0
     logic-not-delete-value: 1
     # SQL 解析缓存，开启后多租户 @SqlParser 注解生效

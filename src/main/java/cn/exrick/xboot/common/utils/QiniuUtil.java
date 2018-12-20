@@ -155,7 +155,7 @@ public class QiniuUtil {
 =======
 package cn.exrick.xboot.common.utils;
 
-import cn.exrick.xboot.exception.XbootException;
+import cn.exrick.xboot.config.exception.XbootException;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;

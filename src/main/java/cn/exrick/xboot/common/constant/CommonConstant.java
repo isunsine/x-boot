@@ -33,19 +33,14 @@ public interface CommonConstant {
     Integer USER_TYPE_ADMIN = 1;
 
     /**
-     * 性别男
+     * 全部数据权限
      */
-    Integer SEX_MAN = 0;
+    Integer DATA_TYPE_ALL = 0;
 
     /**
-     * 性别女
+     * 自定义数据权限
      */
-    Integer SEX_WOMAN = 1;
-
-    /**
-     * 性别保密
-     */
-    Integer SEX_SECRET = 2;
+    Integer DATA_TYPE_CUSTOM = 1;
 
     /**
      * 正常状态

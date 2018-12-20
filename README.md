@@ -15,11 +15,13 @@ http://xboot.exrick.cn
 ### 前台基于Vue+iView项目地址： [xboot-front](https://github.com/Exrick/xboot-front)
 ### 项目简介 
 - [x] 代码拥有详细注释 无复杂逻辑 核心使用 SpringBoot 2.0.5.RELEASE
-- [x] JPA + Mybatis-Plus任意切换
+- [x] JWT / 基于Redis单点登录Token交互 任意切换
+- [x] JPA + Mybatis-Plus 任意切换
 - [x] 操作日志记录方式任意切换Mysql或Elasticseach记录
 - [x] 极简代码生成 只需输入类名和字段 自动创建数据库表
+- [x] 动态权限管理 菜单按钮权限+数据权限配置
 - [x] 支持社交账号、短信等多方式登录 不干涉原用户数据 实现第三方账号管理
-- [x] 基于Websocket消息推送管理、基于Quartz定时任务管理
+- [x] 基于Websocket消息推送管理、基于Quartz定时任务管理、数据字典管理
 - [x] Actuator可视化数据监控
 - [x] 后台提供分布式限流、同步锁、验证码等工具类 前端提供空白Vue模版
 - [x] 可动态配置SSO、短信、邮件、Vaptcha验证码等
@@ -58,6 +60,7 @@ http://xboot.exrick.cn
 - [Json Web Token(JWT)](https://jwt.io/)
 - [Quartz](http://www.quartz-scheduler.org)：定时任务
 - [Beetl](http://ibeetl.com/guide/#beetl)：模版引擎 代码生成使用
+- [Thymeleaf](https://www.thymeleaf.org/)：发送模版邮件使用
 - [Hutool](http://hutool.mydoc.io/)：Java工具包
 - [Jasypt](https://github.com/ulisesbocchio/jasypt-spring-boot)：配置文件加密(thymeleaf作者开发)
 - [Swagger2](https://github.com/Exrick/xmall/blob/master/study/Swagger2.md)：Api文档生成
@@ -79,11 +82,11 @@ http://xboot.exrick.cn
 - 安装依赖并启动：[Redis](https://github.com/Exrick/xmall/blob/master/study/Redis.md)、[Elasticsearch](https://github.com/Exrick/xmall/blob/master/study/Elasticsearch.md)(当配置使用ES记录日志时需要)
 - [Maven安装和在IDEA中配置](https://github.com/Exrick/xmall/blob/master/study/Maven.md)
 - 建议使用IDEA([破解/免费注册](http://idea.lanyus.com/)) 安装 `Lombok` 插件后导入该Maven项目 若未自动下载依赖请在根目录下执行 `mvn install` 命令
-- MySQL数据库新建 `xboot` 数据库，配置文件已开启ddl自动生成表结构但无初始数据，请记得运行导入sql文件
+- MySQL数据库新建 `xboot` 数据库，配置文件已开启ddl自动生成表结构但无初始数据，请记得运行导入xboot.sql文件(当报错找不到Quartz相关表时请设置数据库忽略大小写或重新导入quartz.sql)
 - 修改配置文件 `application.yml` 相应配置，其中有详细注释，所有配置只需在这里修改
 - 编译器中启动运行 `XbootApplication.java` 或根目录下执行命令 `mvn spring-boot:run` 默认端口8888 访问接口文档 `http://localhost:8888/swagger-ui.html` 说明启动成功 管理员账密admin|123456
 - 前台页面请启动基于Vue的 [xboot-front](https://github.com/Exrick/xboot-front) 项目，并修改其接口代理配置
-
+> 温馨提示：若更新代码后报错，请记得更新sql并清空Redis缓存
 ### 开发指南及相关技术栈文档
 - [项目基本配置和使用相关技术栈文档【必读】](https://github.com/Exrick/x-boot/wiki/%E9%A1%B9%E7%9B%AE%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E6%A0%88%E6%96%87%E6%A1%A3%E3%80%90%E5%BF%85%E8%AF%BB%E3%80%91)
 - [如何使用XBoot后端在30秒内开发出增删改接口](https://github.com/Exrick/x-boot/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8XBoot%E5%90%8E%E7%AB%AF%E5%9C%A830%E7%A7%92%E5%86%85%E5%BC%80%E5%8F%91%E5%87%BA%E5%A2%9E%E5%88%A0%E6%94%B9%E6%8E%A5%E5%8F%A3)
