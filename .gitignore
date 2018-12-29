@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .idea/
 
 target/
@@ -11,16 +10,7 @@ target/
 /.project
 .settings
 .settings/
-=======
-.idea/
-
-target/
 
 maven/
 
 xboot-logs/
-
-*.iml
-
-*.bak
->>>>>>> remotes/upstream/master
