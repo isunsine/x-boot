@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Exrickx
  */
-//JDK8函数式接口注解 仅能包含一个抽象方法
+// JDK8函数式接口注解 仅能包含一个抽象方法
 @FunctionalInterface
 public interface XbootBaseService<E, ID extends Serializable> {
 
@@ -48,6 +48,7 @@ public interface XbootBaseService<E, ID extends Serializable> {
      * @return
      */
     public default E save(E entity) {
+
         return getRepository().save(entity);
     }
 

@@ -1,7 +1,16 @@
 package cn.exrick.xboot.config.security;
 
+import cn.exrick.xboot.config.IgnoredUrlsProperties;
+import cn.exrick.xboot.config.security.jwt.AuthenticationFailHandler;
+import cn.exrick.xboot.config.security.jwt.AuthenticationSuccessHandler;
+import cn.exrick.xboot.config.security.jwt.JWTAuthenticationFilter;
+import cn.exrick.xboot.config.security.jwt.RestAccessDeniedHandler;
+import cn.exrick.xboot.config.security.permission.MyFilterSecurityInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,21 +20,21 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import cn.exrick.xboot.config.IgnoredUrlsProperties;
-import cn.exrick.xboot.config.security.jwt.AuthenticationFailHandler;
-import cn.exrick.xboot.config.security.jwt.AuthenticationSuccessHandler;
-import cn.exrick.xboot.config.security.jwt.JWTAuthenticationFilter;
-import cn.exrick.xboot.config.security.jwt.RestAccessDeniedHandler;
-import cn.exrick.xboot.config.security.permission.MyFilterSecurityInterceptor;
-
 /**
  * Security 核心配置类
  * 开启控制权限至Controller
  * @author Exrickx
  */
+@Slf4j
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${xboot.token.redis}")
+    private Boolean tokenRedis;
+
+    @Value("${xboot.tokenExpireTime}")
+    private Integer tokenExpireTime;
 
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;
@@ -44,6 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -65,13 +77,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //表单登录方式
                 .formLogin()
                 .loginPage("/xboot/common/needLogin")
-                //登录需要经过的url请求
+                //登录请求url
                 .loginProcessingUrl("/xboot/login")
                 .permitAll()
                 //成功处理类
                 .successHandler(successHandler)
                 //失败
                 .failureHandler(failHandler)
+                .and()
+                //允许网页iframe
+                .headers().frameOptions().disable()
                 .and()
                 .logout()
                 .permitAll()
@@ -92,8 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
-                //添加JWT过滤器 除/login其它请求都需经过此过滤器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .requestCache();
+                //添加JWT过滤器 除已配置的其它请求都需经过此过滤器
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenRedis, tokenExpireTime, redisTemplate));
     }
 }

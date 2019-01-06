@@ -10,3 +10,7 @@ target/
 /.project
 .settings
 .settings/
+
+maven/
+
+xboot-logs/
