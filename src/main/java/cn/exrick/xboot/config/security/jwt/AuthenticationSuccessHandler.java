@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,11 +52,11 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 		}
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 		List<GrantedAuthority> list = (List<GrantedAuthority>) ((UserDetails) authentication.getPrincipal()).getAuthorities();
-		List<String> authorities = new ArrayList<>();
+		List<String> authorities = Lists.newArrayList();
 		for (GrantedAuthority g : list) {
 			authorities.add(g.getAuthority());
 		}
-		// 登陆成功生成JWT
+		// 登陆成功生成JFWT
 		String token = Jwts.builder()
 				// 主题 放入用户名
 				.setSubject(username)

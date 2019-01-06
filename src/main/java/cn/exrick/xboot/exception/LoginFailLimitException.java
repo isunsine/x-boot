@@ -1,12 +1,10 @@
 package cn.exrick.xboot.exception;
 
-import lombok.Data;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 
 /**
  * @author Exrickx
  */
-@Data
 public class LoginFailLimitException extends InternalAuthenticationServiceException {
 
     private String msg;
@@ -20,4 +18,12 @@ public class LoginFailLimitException extends InternalAuthenticationServiceExcept
         super(msg, t);
         this.msg = msg;
     }
+
+    public void setMsg(String msg){
+        this.msg = msg;
+    }
+    public String getMsg(){
+        return this.msg;
+    }
+
 }
