@@ -40,7 +40,7 @@ public class RedisReentrantLock implements DistributedReentrantLock {
     }
 
     @Override
-    public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException{
+    public boolean tryLock(long timeout, TimeUnit unit) {
         Thread currentThread = Thread.currentThread();
         LockData lockData = threadData.get(currentThread);
         if ( lockData != null ) {

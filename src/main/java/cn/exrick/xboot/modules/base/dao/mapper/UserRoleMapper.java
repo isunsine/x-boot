@@ -3,6 +3,7 @@ package cn.exrick.xboot.modules.base.dao.mapper;
 import cn.exrick.xboot.modules.base.entity.Role;
 import cn.exrick.xboot.modules.base.entity.UserRole;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * @author Exrickx
  */
+@Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     /**
