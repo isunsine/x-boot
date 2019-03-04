@@ -1,14 +1,16 @@
 package cn.exrick.xboot.modules.base.dao.mapper;
 
 import cn.exrick.xboot.modules.base.entity.Permission;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * @author Exrickx
+ * @author liutao
  */
+@Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
 
     /**
