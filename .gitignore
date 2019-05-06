@@ -14,3 +14,5 @@ target/
 maven/
 
 xboot-logs/
+
+rebel.xml
