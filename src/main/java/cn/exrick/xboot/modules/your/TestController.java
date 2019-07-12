@@ -5,6 +5,7 @@ import cn.exrick.xboot.common.lock.Callback;
 import cn.exrick.xboot.common.lock.RedisDistributedLockTemplate;
 import cn.exrick.xboot.common.utils.ResultUtil;
 import cn.exrick.xboot.common.vo.Result;
+import cn.hutool.http.HttpRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Api(description = "测试接口 无需登录验证")
 @Transactional
-@RequestMapping("/test")
+@RequestMapping("/xboot/test")
 public class TestController {
 
     @Autowired

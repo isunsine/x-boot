@@ -9,6 +9,7 @@ import cn.hutool.http.HttpUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +61,7 @@ public class IpInfoUtil {
             }
         }
         if("0:0:0:0:0:0:0:1".equals(ip)){
-            ip="127.0.0.1";
+            ip = "127.0.0.1";
         }
         return ip;
     }
@@ -75,7 +76,7 @@ public class IpInfoUtil {
         String GET_IP_WEATHER = "http://apicloud.mob.com/v1/weather/ip?key="+ appKey +"&ip=";
         if(StrUtil.isNotBlank(ip)){
             String url = GET_IP_WEATHER + ip;
-            String result= HttpUtil.get(url);
+            String result = HttpUtil.get(url);
             return result;
         }
         return null;
@@ -91,15 +92,15 @@ public class IpInfoUtil {
         String GET_IP_LOCATE = "http://apicloud.mob.com/ip/query?key="+ appKey +"&ip=";
         if(null != ip){
             String url = GET_IP_LOCATE + ip;
-            String result="未知";
+            String result = "未知";
             try{
-                String json= HttpUtil.get(url, 3000);
-                IpLocate locate=new Gson().fromJson(json, IpLocate.class);
+                String json = HttpUtil.get(url, 3000);
+                IpLocate locate = new Gson().fromJson(json, IpLocate.class);
                 if(("200").equals(locate.getRetCode())){
                     if(StrUtil.isNotBlank(locate.getResult().getProvince())){
-                        result=locate.getResult().getProvince()+" "+locate.getResult().getCity();
+                        result = locate.getResult().getProvince()+" "+locate.getResult().getCity();
                     }else{
-                        result=locate.getResult().getCountry();
+                        result = locate.getResult().getCountry();
                     }
                 }
             }catch (Exception e){
@@ -110,6 +111,7 @@ public class IpInfoUtil {
         return null;
     }
 
+    @Async
     public void getUrl(HttpServletRequest request){
 
         try {
@@ -128,6 +130,7 @@ public class IpInfoUtil {
         }
     }
 
+    @Async
     public void getInfo(HttpServletRequest request, String p){
         try {
             String url = request.getRequestURL().toString();

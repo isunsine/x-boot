@@ -1,12 +1,15 @@
 package cn.exrick.xboot.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 
 /**
  * @author Exrickx
  */
+@Slf4j
 public class JasyptUtil {
 
     /**
@@ -43,6 +46,7 @@ public class JasyptUtil {
         config.setPoolSize("1");
         config.setProviderName("SunJCE");
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setIvGeneratorClassName("org.jasypt.salt.NoOpIVGenerator");
         config.setStringOutputType("base64");
         return config;
     }
@@ -50,8 +54,8 @@ public class JasyptUtil {
     public static void main(String[] args){
 
         //加密
-        System.out.println(encyptPwd("sunsine","Lt123456"));
+        System.out.println(encyptPwd("xboot","123456"));
         //解密
-        System.out.println(decyptPwd("sunsine","e8eb9vbnBiPRjrRjoI9RL7gW6D3Y8SFT"));
+        System.out.println(decyptPwd("xboot","F4B0s6u9xcDw3V+P0qC4CA=="));
     }
 }

@@ -1,4 +1,3 @@
-
 package cn.exrick.xboot.modules.base.serviceimpl.elasticsearch;
 
 import cn.exrick.xboot.common.vo.SearchVo;
@@ -24,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class EsLogServiceImpl implements EsLogService {
 
-    @Autowired
+    @Autowired(required = false)
     private EsLogDao logDao;
 
     @Override
